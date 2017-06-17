@@ -316,6 +316,7 @@ static void ICACHE_FLASH_ATTR cmdWifiSelectSSID(CmdPacket *cmd) {
     wifiGetApName(ix, myssid);
     myssid[32] = '\0';
     connectToNetwork(myssid, pass);
+    os_free(myssid);
   } else {
     ssid = os_malloc(len+1);
     cmdPopArg(&req, ssid, len);
@@ -328,7 +329,9 @@ static void ICACHE_FLASH_ATTR cmdWifiSelectSSID(CmdPacket *cmd) {
 
     DBG("SelectSSID(%s,%s)", ssid, pass);
     connectToNetwork(ssid, pass);
+    os_free(ssid);
   }
+  os_free(pass);
 }
 
 #if 0
